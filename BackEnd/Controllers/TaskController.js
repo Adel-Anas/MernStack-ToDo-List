@@ -51,13 +51,14 @@ const TaskController = {
     // eslint-disable-next-line no-unused-vars
     softDeleteTask: async(req,res)=>{
         const { id } = req.params
-        const Date = new Date();
         try{
-            if(!id){
-                res.send("Id Not Found, Error Updating")
+           const result=await Task.findByIdAndUpdate(id,{DeletedAt: new Date().toISOString()})
+           if (result) {
+               res.send("Item Deleted Successfully")
             }
-            await Task.findByIdAndUpdate(id,{DeletedAt: Date.toISOString()})
-            res.send("Item Deleted Successfully")
+            else{
+               res.send("Id Not Found !")
+           }
         }catch (err){
             console.error("erreur deleting data",err)
         }
