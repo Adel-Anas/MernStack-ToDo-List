@@ -1,6 +1,7 @@
-const Task = require('../Models/TaskSchema');
+// const Task = require('../Models/TaskSchema');
+import Task from '../Models/TaskSchema'
 
-const TaskController = {
+export const TaskController = {
     getAllTasks: async (req, res) => {
         try {
             const tasks = await Task.find({DeletedAt:null});
@@ -37,13 +38,12 @@ const TaskController = {
             console.error("erreur updating data",err)
         }
     },
-    deleteRecepie: async(req,res)=>{
+    // eslint-disable-next-line no-unused-vars
+    deleteTask: async(req,res)=>{
         try{
-            const task = await Task.findByIdAndDelete(req.params.id,{DeletedAt: new Date().toISOString()})
+            await Task.findByIdAndDelete(req.params.id,{DeletedAt: new Date().toISOString()})
         }catch (err){
             console.error("erreur deleting data",err)
         }
     }
 };
-
-module.exports = TaskController;
