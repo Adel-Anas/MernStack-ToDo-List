@@ -18,6 +18,9 @@ const TaskSchema = mongoose.Schema({
     },
     CreatedBy:{
         type:String,
+    },
+    DeadLine: {
+        type: Date,
     }
 })
 const Task = mongoose.model('Task', TaskSchema);

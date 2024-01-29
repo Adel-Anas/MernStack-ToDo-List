@@ -24,12 +24,12 @@ const TaskController = {
         }
     },
     postTask: async(req, res)=>{
-        const {Title,Description,Priority,CreatedBy}= req.body;
+        const {Title,Description,Priority,CreatedBy, DeadLine}= req.body;
         try{
-            if(!Title || !Description || !Priority || !CreatedBy){
-                res.send("Please Complete All The Fields")
+            if(!Title){
+                res.send("Please Add a Title")
             }
-            const newPost= await Task.create({Title,Description,Priority,CreatedBy});
+            const newPost= await Task.create({Title,Description,Priority,CreatedBy, DeadLine});
             res.json(newPost);
             console.log('Task is submitted successfully');
         }catch (err){
