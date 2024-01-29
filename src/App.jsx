@@ -1,4 +1,5 @@
-import SearchIcon from './assets/Search-icon.png'
+import AddLogo from './assets/Add.png';
+import SearchIcon from './assets/Search-icon.png';
 function App() {
 
   const currentDate = new Date();
@@ -12,7 +13,8 @@ function App() {
         <div className="shadow-2xl rounded-md w-[480px] h-[800px] mb-11 py-6 bg-gradient-to-b from-[#7F7BAB] to-[#283977] flex flex-col">
           <div className='flex items-center justify-evenly mb-7'>
             <input type="text" className='w-[320px] h-[45px] rounded pl-2 outline-none border border-white ' placeholder='Add Task'/>
-            <img src={SearchIcon} alt="search icon" className='w-[35px] h-[35px]'/>
+            <img src={SearchIcon} alt="search icon" className='w-[35px] h-[35px] hover:scale-[1.05] duration-300 cursor-pointer'/>
+            <img src={AddLogo} alt="" className='w-[35px] h-[35px] hover:scale-[1.05] duration-300 cursor-pointer'/>
           </div>
           <div className='flex items-center justify-center mb-6'>
             <p className='text-3xl text-white'>{formattedDate}</p>
@@ -30,10 +32,10 @@ function App() {
               <h2 className='text-white'>3/5 Done</h2>
             </div>
           </div>
-          <div className='pl-10 flex gap-3'>
-            <p className='text-white text-md font-[Poppins] underline'>Today</p>
-            <p className='text-white text-md font-[Poppins] underline'>This Week</p>
-            <p className='text-white text-md font-[Poppins] underline'>This Month</p>
+          <div className='pl-10 flex gap-5'>
+            <p className='text-white text-md font-[Poppins] font-bold'>Today</p>
+            <p className='text-white text-md font-[Poppins] font-bold'>This Week</p>
+            <p className='text-white text-md font-[Poppins] font-bold'>This Month</p>
           </div>
         </div>
       </div>
