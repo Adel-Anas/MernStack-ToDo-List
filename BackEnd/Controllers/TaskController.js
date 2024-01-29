@@ -20,9 +20,9 @@ const TaskController = {
         }
     },
     postTask: async(req, res)=>{
-        const {Title,Description,Priority,CreatedBy}= req.body;
+        const {Title, Description, Priority, CreatedBy, Status}= req.body;
         try{
-            const newPost= await Task.create({Title,Description,Priority,CreatedBy});
+            const newPost= await Task.create({Title, Description, Priority, CreatedBy, Status});
             res.json(newPost);
             console.log('Task is submitted successfully');
         }catch (err){
