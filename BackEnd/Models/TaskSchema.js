@@ -8,9 +8,9 @@ const TaskSchema = mongoose.Schema({
         type: String,
         enum: ['Low', 'Medium', 'High'],
     },
-    Status:{enum: 
-        ["ToDo","In Progress", "Completed"],
-        default: "ToDo"
+    Status:{
+        type: String,
+        enum: ["ToDo", "In Progress", "Completed"],
     },
     DeletedAt:{
         type:Date,
@@ -20,5 +20,6 @@ const TaskSchema = mongoose.Schema({
         type:String,
     }
 })
+const Task = mongoose.model('Task', TaskSchema);
 
-export const Task = mongoose.model('Task', TaskSchema);
+export default Task;

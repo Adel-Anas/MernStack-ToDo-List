@@ -2,10 +2,12 @@
 import env from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
-import router from './Routes/Route';
+import router from './Routes/Route.js';
 const app = express();
 const PORT = 4001;
 env.config();
+
+app.use(express.json())
 
 mongoose.connect(process.env.MONGODB_URI)
 .then(()=> {
