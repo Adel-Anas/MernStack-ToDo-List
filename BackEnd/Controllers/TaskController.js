@@ -1,7 +1,6 @@
-// const Task = require('../Models/TaskSchema');
-import Task from '../Models/TaskSchema'
+import Task from '../Models/TaskSchema.js';
 
-export const TaskController = {
+const TaskController = {
     getAllTasks: async (req, res) => {
         try {
             const tasks = await Task.find({DeletedAt:null});
@@ -21,9 +20,9 @@ export const TaskController = {
         }
     },
     postTask: async(req, res)=>{
-        const {Title,Description,Priority,Status,DeletedAt,CreatedBy}= req.body;
+        const {Title,Description,Priority,CreatedBy}= req.body;
         try{
-            const newPost= await Task.create({Title,Description,Priority,Status,DeletedAt,CreatedBy});
+            const newPost= await Task.create({Title,Description,Priority,CreatedBy});
             res.json(newPost);
             console.log('Task is submitted successfully');
         }catch (err){
@@ -42,8 +41,12 @@ export const TaskController = {
     deleteTask: async(req,res)=>{
         try{
             await Task.findByIdAndDelete(req.params.id,{DeletedAt: new Date().toISOString()})
+            res.send("Item Deleted Successfully")
         }catch (err){
             console.error("erreur deleting data",err)
         }
     }
 };
+
+
+export default TaskController;
