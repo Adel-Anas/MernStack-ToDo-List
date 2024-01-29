@@ -12,7 +12,11 @@ const TaskController = {
     } ,
     getTaskById: async (req, res) => {
         try {
-            const tasks= await Task.findById(req.params.id);
+            const {id} = req.params
+            if(!id){
+                res.send("Id not Found")
+            }
+            const tasks= await Task.findById(id);
             res.status(200).json(tasks);
         } catch (err) {
             console.error("Error getting data", err);
@@ -22,6 +26,9 @@ const TaskController = {
     postTask: async(req, res)=>{
         const {Title,Description,Priority,CreatedBy}= req.body;
         try{
+            if(!Title || !Description || !Priority || !CreatedBy){
+                res.send("Please Complete All The Fields")
+            }
             const newPost= await Task.create({Title,Description,Priority,CreatedBy});
             res.json(newPost);
             console.log('Task is submitted successfully');
@@ -30,17 +37,26 @@ const TaskController = {
         }
     },
     updateTask: async(req,res)=>{
+        const {id} = req.params
         try{
-            const task = await Task.findByIdAndUpdate(req.params.id,req.body)
+            if(!id){
+                res.send("Id Not Found, can't update")
+            }
+            const task = await Task.findByIdAndUpdate(id, req.body)
             res.status(200).json(task)
         }catch(err){
             console.error("erreur updating data",err)
         }
     },
     // eslint-disable-next-line no-unused-vars
-    deleteTask: async(req,res)=>{
+    softDeleteTask: async(req,res)=>{
+        const { id } = req.params
+        const Date = new Date();
         try{
-            await Task.findByIdAndDelete(req.params.id,{DeletedAt: new Date().toISOString()})
+            if(!id){
+                res.send("Id Not Found, Error Updating")
+            }
+            await Task.findByIdAndUpdate(id,{DeletedAt: Date.toISOString()})
             res.send("Item Deleted Successfully")
         }catch (err){
             console.error("erreur deleting data",err)

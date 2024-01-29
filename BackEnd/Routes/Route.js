@@ -11,6 +11,6 @@ router.post('/tasks', TaskController.postTask)
 
 router.put('/tasks/:id', TaskController.updateTask)
 
-router.delete('/tasks/:id', TaskController.deleteTask)
+router.put('/tasks/softDelete/:id', TaskController.softDeleteTask)
 
 export default router;
