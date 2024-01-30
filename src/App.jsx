@@ -16,10 +16,32 @@ function App() {
     Deadline: ""
   })
   const [addTask, setAddTask] = useState(false);
+  const [updateTask, setUpdateTask] = useState(false);
+  const [itemId, setItemId] = useState(0)
+
+  const [updatedTask, setUpdatedTask] = useState({
+    Title: "",
+    Description: "",
+    Priority: "",
+    Status: "ToDo",
+    DeletedAt: null,
+    CreatedBy: "",
+    // Deadline: ""
+  })
+
+  const showUpdateCard = (item) => {
+    setUpdatedTask(
+      item
+    )
+    setUpdateTask(true)
+    setItemId(item._id)
+  }
 
   const showAddTask = () => {
     setAddTask(true)
   }
+
+
 
   const getData = async () => {
     try{
@@ -50,6 +72,15 @@ function App() {
     }
   }
 
+  const handleUpdate = async (id) => {
+    try{
+      await axios.put(`http://localhost:4001/api/tasks/${id}`, updatedTask)
+      setUpdateTask(false)
+      getData()
+    }catch(err){
+      console.error(err)
+    }
+  }
   useEffect(()=>{
     getData();
   }, [])
@@ -67,10 +98,10 @@ function App() {
             <img src={SearchIcon} alt="search icon" className='w-[35px] h-[35px] hover:scale-[1.05] duration-300 cursor-pointer'/>
             <img src={AddLogo} onClick={showAddTask} alt="" className='w-[35px] h-[35px] hover:scale-[1.05] duration-300 cursor-pointer'/>
           </div>
-           <div className='flex flex-col gap-6 items-center justify-center mb-6' >
+           <div className='flex flex-col gap-6 items-center justify-center mb-6 cursor-pointer'>
               {fetchedData.map((item, index)=>{
                 return (
-                  <div  className='bg-blue-500 w-80 h-auto py-3 flex flex-col gap-2 items-center justify-center rounded-md' key={index}>
+                  <div onClick={()=>showUpdateCard(item)} className='cursor-pointer bg-blue-500 w-80 h-auto py-3 flex flex-col gap-2 items-center justify-center rounded-md' key={index}>
                     <p className='text-white font-[Poppins] text-lg'>{item.Title}</p>
                     <div className='w-full flex items-center justify-end pr-5'>
                      <p className='text-sm text-white font-[Poppins]'>Priority: {item.Priority}</p>
@@ -110,7 +141,6 @@ function App() {
         </div>
       </div>
       <AnimatePresence>
-
         {addTask && 
           <div className='fixed top-0 left-0 right-0 bottom-0 bg-[#00000099] flex items-center justify-center'>
             <motion.div
@@ -147,7 +177,53 @@ function App() {
             </motion.div>
           </div>
         }
-  </AnimatePresence>
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {updateTask && 
+          <div className='fixed top-0 left-0 right-0 bottom-0 bg-[#00000099] flex items-center justify-center'>
+            <motion.div
+              className="home-card w-auto p-16 h-auto bg-white rounded relative flex flex-col items-center justify-center gap-10"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              transition={{ duration: "0.5" }}
+            >
+              <h1 className='text-2xl font-[Poppins] font-bold'>Update Task TASK</h1>
+
+              <input type="text" className='border-b-2 border-black w-72 h-10 pl-2 outline-none focus:border-blue-600 duration-700' value={updatedTask.CreatedBy} name="CreatedBy" placeholder='Enter Your Name' onChange = {(e)=>setUpdatedTask({...updatedTask, CreatedBy: e.target.value})} />
+
+              <input type="text" value={updatedTask.Title} className='border-b-2 border-black w-72 h-10 pl-2 outline-none focus:border-blue-600 duration-700' placeholder='Task' name="Title"
+              onChange = {(e)=> setUpdatedTask({...updatedTask, Title: e.target.value})}/>
+
+              <textarea id="" cols="1" value={updatedTask.Description} className='border-b-2 border-black w-72 h-10 pl-2 pt-2 outline-none focus:border-blue-600 duration-700' placeholder='Description' onChange = {(e)=>setUpdatedTask({...updatedTask, Description: e.target.value})} name="Description"></textarea>
+
+              <select id="" name="Priority" value={updatedTask.Priority} className='w-72 outline-none border-b-2 border-black focus:border-blue-600' onChange = {(e)=>setUpdatedTask({...updatedTask, Priority: e.target.value})}>
+                <option value="">Select Priority</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+
+              <select name="" id="" value={updatedTask.Status} onChange={(e)=>setUpdatedTask({...updatedTask, Status: e.target.value})} className='w-72 outline-none border-b-2 border-black focus:border-blue-600'>
+                <option value="ToDo">To Do</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Done">Done</option>
+              </select>
+
+              {/* <div>
+                <p className='mb-3 font-[Poppins]'>Enter a Deadline</p>
+                <input type="date" className='border border-black px-4 py-2' value={updatedTask.Deadline} onChange={(e)=>setFormData({...updatedTask, Deadline: e.target.value})} />
+              </div> */}
+
+              <div className='flex gap-7'>
+                <button onClick={()=>handleUpdate(itemId)} className=' w-28 h-10 rounded bg-black text-white font-[Poppins] hover:scale-105 duration-500'>Update</button>
+                <button onClick={()=>{setUpdateTask(false)}} className='w-28 h-10 rounded bg-red-600 text-white font-[Poppins] hover:scale-105 duration-500'>Close</button>
+              </div>
+            </motion.div>
+          </div>
+        }
+      </AnimatePresence>
     </>
   )
 }
