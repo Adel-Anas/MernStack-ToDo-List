@@ -186,7 +186,7 @@ function App() {
               </div>
 
               <div className='flex gap-7'>
-                <Button variant="dark" onClick={handlePost} >Add</Button>
+                <Button variant="info" onClick={handlePost} >Add</Button>
                 <Button onClick={()=>{setAddTask(false)}} variant="danger">Close</Button>
               </div>
             </motion.div>
