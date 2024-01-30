@@ -28,6 +28,12 @@ function App() {
     CreatedBy: "",
     // Deadline: ""
   })
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredTasks = fetchedData.filter((task) =>
+    task.Title.toLowerCase().includes(searchQuery.toLowerCase()) || task.CreatedBy.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+ 
 
   const showUpdateCard = (item) => {
     setUpdatedTask(
@@ -40,6 +46,8 @@ function App() {
   const showAddTask = () => {
     setAddTask(true)
   }
+
+
 
 
 
@@ -94,12 +102,15 @@ function App() {
             <h1 className='text-3xl text-white font-[Poppins] mb-5'>To Do</h1>
           </div>
           <div className='flex items-center justify-evenly mb-7 border-b-[2px] pb-8'>
-            <input type="text" className='w-[320px] h-[45px] rounded pl-2 outline-none border border-white' placeholder='Search Task'/>
+            <input type="text" className='w-[320px] h-[45px] rounded pl-2 outline-none border border-white' placeholder='Search Task'
+            value={searchQuery} onChange={e => setSearchQuery(e.target.value)} 
+         />
+        
             <img src={SearchIcon} alt="search icon" className='w-[35px] h-[35px] hover:scale-[1.05] duration-300 cursor-pointer'/>
             <img src={AddLogo} onClick={showAddTask} alt="" className='w-[35px] h-[35px] hover:scale-[1.05] duration-300 cursor-pointer'/>
           </div>
            <div className='flex flex-col gap-6 items-center justify-center mb-6 cursor-pointer'>
-              {fetchedData.map((item, index)=>{
+              {filteredTasks.map((item, index)=>{
                 return (
                   <div onClick={()=>showUpdateCard(item)} className='cursor-pointer bg-blue-500 w-80 h-auto py-3 flex flex-col gap-2 items-center justify-center rounded-md' key={index}>
                     <p className='text-white font-[Poppins] text-lg'>{item.Title}</p>
