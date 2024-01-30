@@ -4,6 +4,10 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import AddLogo from './assets/Add.png';
 import SearchIcon from './assets/Search-icon.png';
+import Button from './components/select';
+
+
+
 function App() {
   const [fetchedData, setFetchedData] = useState([]);
   const [formData, setFormData] = useState({
@@ -182,8 +186,8 @@ function App() {
               </div>
 
               <div className='flex gap-7'>
-                <button onClick={handlePost} className=' w-28 h-10 rounded bg-black text-white font-[Poppins] hover:scale-105 duration-500'>Add</button>
-                <button onClick={()=>{setAddTask(false)}} className='w-28 h-10 rounded bg-red-600 text-white font-[Poppins] hover:scale-105 duration-500'>Close</button>
+                <Button variant="dark" onClick={handlePost} >Add</Button>
+                <Button onClick={()=>{setAddTask(false)}} variant="danger">Close</Button>
               </div>
             </motion.div>
           </div>
@@ -228,8 +232,8 @@ function App() {
               </div> */}
 
               <div className='flex gap-7'>
-                <button onClick={()=>handleUpdate(itemId)} className=' w-28 h-10 rounded bg-black text-white font-[Poppins] hover:scale-105 duration-500'>Update</button>
-                <button onClick={()=>{setUpdateTask(false)}} className='w-28 h-10 rounded bg-red-600 text-white font-[Poppins] hover:scale-105 duration-500'>Close</button>
+                <Button onClick={()=>handleUpdate(itemId)} variant="dark">Update</Button>
+                <Button onClick={()=>{setUpdateTask(false)}} variant='danger'>Close</Button>
               </div>
             </motion.div>
           </div>
