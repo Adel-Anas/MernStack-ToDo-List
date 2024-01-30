@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import cors from 'cors';
 import env from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
@@ -8,6 +9,10 @@ const PORT = 4001;
 env.config();
 
 app.use(express.json())
+app.use(cors({
+  origin: ["http://localhost:5173"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+}))
 
 mongoose.connect(process.env.MONGODB_URI)
 .then(()=> {
