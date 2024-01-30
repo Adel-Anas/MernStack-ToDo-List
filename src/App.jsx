@@ -6,6 +6,15 @@ import AddLogo from './assets/Add.png';
 import SearchIcon from './assets/Search-icon.png';
 function App() {
   const [fetchedData, setFetchedData] = useState([]);
+  const [formData, setFormData] = useState({
+    Title: "",
+    Description: "",
+    Priority: "",
+    Status: "ToDo",
+    DeletedAt: null,
+    CreatedBy: "",
+    Deadline: ""
+  })
   const [addTask, setAddTask] = useState(false);
 
   const showAddTask = () => {
@@ -16,7 +25,26 @@ function App() {
     try{
       const response = await axios.get("http://localhost:4001/api/tasks")
       setFetchedData(response.data);
-      console.log(response.data)
+    }catch(err){
+      console.error(err)
+    }
+  }
+
+  const handlePost = async (e) => {
+    e.preventDefault();
+    try{
+      console.log(formData.Title)
+      await axios.post("http://localhost:4001/api/tasks", formData)
+      setFormData({
+        Title: "",
+        Description: "",
+        Priority: "",
+        Status: "",
+        DeletedAt: null,
+        CreatedBy: ""
+    })
+      getData();
+      setAddTask(false);
     }catch(err){
       console.error(err)
     }
@@ -93,22 +121,31 @@ function App() {
               transition={{ duration: "0.5" }}
             >
               <h1 className='text-2xl font-[Poppins] font-bold'>ADD NEW TASK</h1>
-              <input type="text" className='border-b-2 border-black w-72 h-10 pl-2 outline-none focus:border-blue-600 duration-700' placeholder='Enter Your Name'/>
-              <input type="text" className='border-b-2 border-black w-72 h-10 pl-2 outline-none focus:border-blue-600 duration-700' placeholder='Task'/>
-              <textarea name="" id="" cols="1" className='border-b-2 border-black w-72 h-10 pl-2 pt-2 outline-none focus:border-blue-600 duration-700' placeholder='Description'></textarea>
-              <select id="" className='w-72 outline-none border-b-2 border-black focus:border-blue-600'>
+              <input type="text" className='border-b-2 border-black w-72 h-10 pl-2 outline-none focus:border-blue-600 duration-700' value={formData.CreatedBy} name="CreatedBy" placeholder='Enter Your Name' onChange = {(e)=>setFormData({...formData, CreatedBy: e.target.value})} />
+
+              <input type="text" value={formData.Title} className='border-b-2 border-black w-72 h-10 pl-2 outline-none focus:border-blue-600 duration-700' placeholder='Task' name="Title"
+              onChange = {(e)=> setFormData({...formData, Title: e.target.value})}/>
+
+              <textarea id="" cols="1" value={formData.Description} className='border-b-2 border-black w-72 h-10 pl-2 pt-2 outline-none focus:border-blue-600 duration-700' placeholder='Description' onChange = {(e)=>setFormData({...formData, Description: e.target.value})} name="Description"></textarea>
+
+              <select id="" name="Priority" value={formData.Priority} className='w-72 outline-none border-b-2 border-black focus:border-blue-600' onChange = {(e)=>setFormData({...formData, Priority: e.target.value})}>
                 <option value="">Select Priority</option>
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
               </select>
+
+              <div>
+                <p className='mb-3 font-[Poppins]'>Enter a Deadline</p>
+                <input type="date" className='border border-black px-4 py-2' value={formData.Deadline} onChange={(e)=>setFormData({...formData, Deadline: e.target.value})} />
+              </div>
+
               <div className='flex gap-7'>
-                <button className=' w-28 h-10 rounded bg-black text-white font-[Poppins] hover:scale-105 duration-500'>Add</button>
+                <button onClick={handlePost} className=' w-28 h-10 rounded bg-black text-white font-[Poppins] hover:scale-105 duration-500'>Add</button>
                 <button onClick={()=>{setAddTask(false)}} className='w-28 h-10 rounded bg-red-600 text-white font-[Poppins] hover:scale-105 duration-500'>Close</button>
               </div>
             </motion.div>
           </div>
-    
         }
   </AnimatePresence>
     </>

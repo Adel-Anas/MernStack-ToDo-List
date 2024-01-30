@@ -24,12 +24,9 @@ const TaskController = {
         }
     },
     postTask: async(req, res)=>{
-        const {Title, Description, Priority, CreatedBy, Status}= req.body;
+        const {Title, Description, Priority, CreatedBy, Status, DeletedAt, Deadline}= req.body;
         try{
-            if(!Title || !CreatedBy){
-                res.send("Please Complete All The Fields")
-            }
-            const newPost= await Task.create({Title,Description,Priority,CreatedBy, Status});
+            const newPost= await Task.create({Title,Description,Priority,CreatedBy, Status, DeletedAt, Deadline});
             res.json(newPost);
             console.log('Task is submitted successfully');
         }catch (err){
@@ -51,12 +48,11 @@ const TaskController = {
     // eslint-disable-next-line no-unused-vars
     softDeleteTask: async(req,res)=>{
         const { id } = req.params
-        const Date = new Date();
         try{
             if(!id){
                 res.send("Id Not Found, Error Updating")
             }
-            await Task.findByIdAndUpdate(id,{DeletedAt: Date.toISOString()})
+            await Task.findByIdAndUpdate(id,{DeletedAt: new Date().toISOString()})
             res.send("Item Deleted Successfully")
         }catch (err){
             console.error("erreur deleting data",err)
