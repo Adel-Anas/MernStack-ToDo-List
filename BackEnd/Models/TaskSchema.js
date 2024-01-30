@@ -2,8 +2,13 @@ import mongoose from 'mongoose'
 
 const TaskSchema = mongoose.Schema({
     
-    Title: {type: String, required:true},
-    Description:{type: String},
+    Title: {
+        type: String,
+        required:true
+    },
+    Description:{
+        type: String
+    },
     Priority: {
         type: String,
         enum: ['Low', 'Medium', 'High'],
@@ -18,6 +23,9 @@ const TaskSchema = mongoose.Schema({
     },
     CreatedBy:{
         type:String,
+    },
+    Deadline:{
+        type: Date
     }
 })
 const Task = mongoose.model('Task', TaskSchema);
