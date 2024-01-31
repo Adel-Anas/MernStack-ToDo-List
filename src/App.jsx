@@ -34,10 +34,11 @@ function App() {
     Status: "ToDo",
     DeletedAt: null,
     CreatedBy: "",
-    // Deadline: ""
+    Deadline: ""
   })
   const [searchQuery, setSearchQuery] = useState("");
-  const formattedDate = new Date(updatedTask.Deadline).toISOString().split('T')[0];
+  const formattedDate =new Date(updatedTask.Deadline).toString().split("01:",1)
+  console.log(formattedDate)
 
   const filteredTasks = fetchedData.filter((task) =>
     task.Title.toLowerCase().includes(searchQuery.toLowerCase()) || task.CreatedBy.toLowerCase().includes(searchQuery.toLowerCase())
@@ -232,7 +233,7 @@ function App() {
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
               </select>
-
+ 
               <select name="" id="" value={updatedTask.Status} onChange={(e)=>setUpdatedTask({...updatedTask, Status: e.target.value})} className='w-96 outline-none border-b-2 border-black focus:border-blue-600'>
                 <option value="ToDo">To Do</option>
                 <option value="In Progress">In Progress</option>
