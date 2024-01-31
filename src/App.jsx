@@ -97,7 +97,7 @@ function App() {
 
   return ( 
     <>
-      <div className="flex items-center justify-center gap-8 min-h-screen bg-[#414c50]">
+      <div className="flex items-center justify-center gap-8 min-h-screen bg-[#192428]">
         {/* TO DO TABLE  */}
         <div className="shadow rounded-md w-[400px] h-[650px] mb-11 py-6 bg-gradient-to-b from-[#7F7BAB] to-[#283977] flex flex-col">
           <div className='mb-8 flex items-center justify-center border-b-[2px] border-b-white'>
@@ -111,7 +111,7 @@ function App() {
             <img src={SearchIcon} alt="search icon" className='w-[35px] h-[35px] hover:scale-[1.05] duration-300 cursor-pointer'/>
             <img src={AddLogo} onClick={showAddTask} alt="" className='w-[35px] h-[35px] hover:scale-[1.05] duration-300 cursor-pointer'/>
           </div>
-           <div className='scroll flex flex-col gap-6 items-center justify-center mb-6 cursor-pointer overflow-y-auto pt-14'>
+           <div className='scroll pt-[200px] flex flex-col gap-6 items-center justify-center mb-6 cursor-pointer overflow-y-auto'>
               {filteredTasks.map((item, index)=>{
                 return (
                   <div className='cursor-pointer bg-blue-500 w-80 h-auto py-3 flex flex-col gap-3 items-center justify-center rounded-md hover:opacity-70 duration-300' key={index}>
