@@ -37,8 +37,6 @@ function App() {
     Deadline: ""
   })
   const [searchQuery, setSearchQuery] = useState("");
-  const formattedDate =new Date(updatedTask.Deadline).toString().split("01:",1)
-  console.log(formattedDate)
 
   const filteredTasks = fetchedData.filter((task) =>
     task.Title.toLowerCase().includes(searchQuery.toLowerCase()) || task.CreatedBy.toLowerCase().includes(searchQuery.toLowerCase())
