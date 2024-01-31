@@ -24,6 +24,7 @@ function App() {
   })
   const [addTask, setAddTask] = useState(false);
   const [updateTask, setUpdateTask] = useState(false);
+  const[userInfo, setUserInfo] = useState(false);
   const [itemId, setItemId] = useState(0)
 
   const [updatedTask, setUpdatedTask] = useState({
@@ -36,6 +37,7 @@ function App() {
     // Deadline: ""
   })
   const [searchQuery, setSearchQuery] = useState("");
+  const formattedDate = new Date(updatedTask.Deadline).toISOString().split('T')[0];
 
   const filteredTasks = fetchedData.filter((task) =>
     task.Title.toLowerCase().includes(searchQuery.toLowerCase()) || task.CreatedBy.toLowerCase().includes(searchQuery.toLowerCase())
@@ -48,7 +50,12 @@ function App() {
     setUpdateTask(true)
     setItemId(item._id)
   }
-
+  const showInfoUser = (item) => {
+    setUpdatedTask(
+      item
+    )
+    setUserInfo(true)
+  }
   const showAddTask = () => {
     setAddTask(true)
   }
@@ -111,11 +118,11 @@ function App() {
             <img src={SearchIcon} alt="search icon" className='w-[35px] h-[35px] hover:scale-[1.05] duration-300 cursor-pointer'/>
             <img src={AddLogo} onClick={showAddTask} alt="" className='w-[35px] h-[35px] hover:scale-[1.05] duration-300 cursor-pointer'/>
           </div>
-           <div className='scroll flex flex-col gap-6 items-center justify-center mb-6 cursor-pointer overflow-y-auto pt-14'>
+           <div className=' pt-[200px] scroll flex flex-col gap-6 items-center justify-center mb-6 cursor-pointer overflow-y-auto pt-14'>
               {filteredTasks.map((item, index)=>{
                 return (
                   <div className='cursor-pointer bg-blue-500 w-80 h-auto py-3 flex flex-col gap-3 items-center justify-center rounded-md hover:opacity-70 duration-300' key={index}>
-                    <p className='text-white font-[Poppins] text-xl'>{item.Title}</p>
+                    <p  onClick={()=>showInfoUser(item)} className='text-white font-[Poppins] text-xl'>{item.Title}</p>
                     <div className='w-full flex items-center justify-between px-5 gap-4'>
                       <div className='flex gap-1'>
                         <button className='status'>ToDo</button>
@@ -240,8 +247,49 @@ function App() {
           </div>
         }
       </AnimatePresence>
+      {/* user info card */}
+      <AnimatePresence>
+        {userInfo && 
+          <div className='fixed top-0 left-0 right-0 bottom-0 bg-[#00000099] flex items-center justify-center'>
+            <motion.div
+              className=" home-card w-[600px] p-10 h-auto bg-white rounded relative flex flex-col items-center justify-center gap-10"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              transition={{ duration: "0.5" }}
+            >
+              <h1 className='text-3xl font-[Poppins] font-bold italic underline '>INFO TASK</h1>
 
+              <input  disabled={true}  type="text" className="card-input" value={updatedTask.CreatedBy} name="CreatedBy" placeholder='Enter Your Name' onChange = {(e)=>setUpdatedTask({...updatedTask, CreatedBy: e.target.value})} />
 
+              <input   disabled={true}   type="text" value={updatedTask.Title} className='card-input' placeholder='Task' name="Title"
+              onChange = {(e)=> setUpdatedTask({...updatedTask, Title: e.target.value})}/>
+
+              <input    disabled={true}  id="" cols="1" value={updatedTask.Description} className='card-input' placeholder='Description' onChange = {(e)=>setUpdatedTask({...updatedTask, Description: e.target.value})} name="Description"></input>
+
+              {/* <select id="" name="Priority" value={updatedTask.Priority} className='w-96 outline-none border-b-2 border-black focus:border-blue-600' onChange = {(e)=>setUpdatedTask({...updatedTask, Priority: e.target.value})}>
+                <option value="">Select Priority</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select> */}
+              <input className='card-input ' type="text" disabled={true}  placeholder={updatedTask.Priority}/>
+              
+
+              {/* <select name="" id="" value={updatedTask.Status} onChange={(e)=>setUpdatedTask({...updatedTask, Status: e.target.value})} className='w-96 outline-none border-b-2 border-black focus:border-blue-600'>
+                <option value="ToDo">To Do</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Done">Done</option>
+              </select> */}
+              <input className='card-input' type="text" disabled={true}  placeholder={updatedTask.Status}/>
+              <input  className="card-input text-center text-base " type="text" placeholder={formattedDate} />
+              <Button className='w-[200px]' onClick={()=>{setUserInfo(false)}} variant='warning'>Close</Button>
+
+            </motion.div>
+            
+          </div>
+        }
+      </AnimatePresence>
     </>
   )
 }
