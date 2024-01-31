@@ -34,10 +34,10 @@ function App() {
     Status: "ToDo",
     DeletedAt: null,
     CreatedBy: "",
-    // Deadline: ""
+    Deadline: ""
   })
   const [searchQuery, setSearchQuery] = useState("");
-  const formattedDate = new Date(updatedTask.Deadline).toISOString().split('T')[0];
+  // const formateddate= new Date(updatedTask.Deadline).split("01",1);
 
   const filteredTasks = fetchedData.filter((task) =>
     task.Title.toLowerCase().includes(searchQuery.toLowerCase()) || task.CreatedBy.toLowerCase().includes(searchQuery.toLowerCase())
@@ -232,7 +232,7 @@ function App() {
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
               </select>
-
+ 
               <select name="" id="" value={updatedTask.Status} onChange={(e)=>setUpdatedTask({...updatedTask, Status: e.target.value})} className='w-96 outline-none border-b-2 border-black focus:border-blue-600'>
                 <option value="ToDo">To Do</option>
                 <option value="In Progress">In Progress</option>
@@ -282,7 +282,7 @@ function App() {
                 <option value="Done">Done</option>
               </select> */}
               <input className='card-input' type="text" disabled={true}  placeholder={updatedTask.Status}/>
-              <input  className="card-input text-center text-base " type="text" placeholder={formattedDate} />
+              {/* <input  className="card-input text-center text-base " type="text" placeholder={formateddate} /> */}
               <Button className='w-[200px]' onClick={()=>{setUserInfo(false)}} variant='warning'>Close</Button>
 
             </motion.div>
