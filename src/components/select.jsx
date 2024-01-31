@@ -1,7 +1,6 @@
-import React from 'react';
 import { cn } from '../utils/cn.tsx';
 
-const Button =({variant="default", className,children, ...rest})=>{
+const Button =({ variant="default", className, children, ...rest})=>{
     return (
 
         <button className={
