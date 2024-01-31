@@ -5,4 +5,6 @@
 .status{
   @apply  w-auto text-white text-sm hover:underline-offset-2 duration-500
 }
-
+.card-input{
+  @apply  font-semibold rounded-md border border-black w-96 h-10 pl-2 outline-none focus:border-blue-600 duration-700
+}
