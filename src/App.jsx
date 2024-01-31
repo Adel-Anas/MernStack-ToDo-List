@@ -37,6 +37,7 @@ function App() {
     Deadline: ""
   })
   const [searchQuery, setSearchQuery] = useState("");
+  // const formateddate= new Date(updatedTask.Deadline).split("01",1);
 
   const filteredTasks = fetchedData.filter((task) =>
     task.Title.toLowerCase().includes(searchQuery.toLowerCase()) || task.CreatedBy.toLowerCase().includes(searchQuery.toLowerCase())
@@ -281,7 +282,7 @@ function App() {
                 <option value="Done">Done</option>
               </select> */}
               <input className='card-input' type="text" disabled={true}  placeholder={updatedTask.Status}/>
-              <input  className="card-input text-center text-base " type="text" placeholder={formattedDate} />
+              {/* <input  className="card-input text-center text-base " type="text" placeholder={formateddate} /> */}
               <Button className='w-[200px]' onClick={()=>{setUserInfo(false)}} variant='warning'>Close</Button>
 
             </motion.div>
