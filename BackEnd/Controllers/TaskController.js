@@ -3,13 +3,21 @@ import Task from '../Models/TaskSchema.js';
 const TaskController = {
     getAllTasks: async (req, res) => {
         try {
-            const tasks = await Task.find({DeletedAt:null});
+            const { status } = req.query;
+
+            let query = { DeletedAt: null };
+
+            if (status) {
+                query.Status = status;
+            }
+
+            const tasks = await Task.find(query);
             res.json(tasks);
         } catch (error) {
             console.error("Error getting data", error);
             res.status(500).send("Internal Server Error");
         }
-    } ,
+    },
     getTaskById: async (req, res) => {
         try {
             const {id} = req.params
@@ -49,9 +57,6 @@ const TaskController = {
     softDeleteTask: async(req,res)=>{
         const { id } = req.params
         try{
-            if(!id){
-                res.send("Id Not Found, Error Updating")
-            }
             await Task.findByIdAndUpdate(id,{DeletedAt: new Date().toISOString()})
             res.send("Item Deleted Successfully")
         }catch (err){

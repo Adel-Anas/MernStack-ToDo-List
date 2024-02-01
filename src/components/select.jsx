@@ -6,7 +6,7 @@ const Button =({ variant="default", className, children, ...rest})=>{
         <button className={
             cn(
                 "w-28 h-10 rounded font-[Poppins] hover:scale-105 duration-500",
-                variant === "default" && "bg-white",
+                variant === "default" && "bg-white text-black border border-black",
                 variant === "primary" && "bg-blue-600",
                 variant === "danger" && "bg-red-600 text-white",
                 variant === "success" && "bg-green-600 text-white",
