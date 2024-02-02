@@ -1,0 +1,115 @@
+openapi: 3.0.0
+info:
+  title: Tasks API
+  description: API for managing tasks
+  version: 1.0.0
+
+paths:
+  /tasks:
+    get:
+      summary: Get all tasks
+      tags:
+        - "Tasks"
+      responses:
+        '200':
+          description: A list of tasks
+          content:
+            application/json:
+              example:
+                - _id: "1"
+                  title: "Task 1"
+                  description: "Description "
+                  Priority: "Low,Medium,High"
+                  status: "Todo,In Progress,Completed"
+                  DeletedAt: "Date"
+                  CreatedBy: "Name of creator"
+                  Deadline: "Date"
+              
+        '400':
+          description: Item not found
+    post:
+      summary: Create a new task
+      tags:
+        - "Tasks"
+      requestBody:
+        description: Task details
+        required: true
+        content:
+          application/json:
+            example:
+              title: "Task 1"
+              description: "Description "
+              Priority: "Low,Medium,High"
+              status: "Todo,In Progress,Completed"
+              DeletedAt: "Date"
+              CreatedBy: "Name of creator"
+              Deadline: "Date"
+      responses:
+        '200':
+          description: Task created successfully
+
+  /tasks/{id}:
+    get:
+      summary: Get a specific task by ID
+      tags:
+        - "Tasks"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the task
+      responses:
+        '200':
+          description: A specific task
+          content:
+            application/json:
+              example:
+                _id: "1"
+                title: "Task 1"
+                description: "Description 1"
+    put:
+      summary: Update a specific task by ID
+      tags:
+        - "Tasks"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the task
+      requestBody:
+        description: Updated task details
+        required: true
+        content:
+          application/json:
+            example:
+              title: "Updated Task"
+              description: "Updated description"
+              Priority: "Low,Medium,High"
+              status: "Todo,In Progress,Completed"
+              DeletedAt: "Date"
+              CreatedBy: "Name of creator"
+              Deadline: "Date"
+      responses:
+        '200':
+          description: Task updated successfully
+
+  /tasks/softDelete/{id}:
+    put:
+      summary: Soft delete a specific task by ID
+      tags:
+        - "Tasks"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the task
+      responses:
+        '200':
+          description: Task soft deleted successfully
+

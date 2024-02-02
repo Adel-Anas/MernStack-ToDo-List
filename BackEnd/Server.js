@@ -7,7 +7,15 @@ import router from './Routes/Route.js';
 const app = express();
 const PORT = 4001;
 env.config();
+import YAML from 'yamljs';
+import swaggerUi from 'swagger-ui-express';
+const swaggerDocument = YAML.load("./swagger.yaml");
 
+
+
+
+
+app.use('/swager', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use(express.json())
 app.use(cors({
   origin: ["http://localhost:5173"],
