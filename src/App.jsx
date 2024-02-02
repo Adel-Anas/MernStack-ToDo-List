@@ -15,6 +15,7 @@ import useGet from "./customHooks/useFetch.js";
 
 function App() {
   const urlApi = 'http://localhost:4001/api/tasks';
+  
 
   const [toDO]= useGet( urlApi, {status : 'ToDo'})
   const [inProgressItems] = useGet( urlApi, {status: 'In Progress'});
@@ -59,16 +60,6 @@ function App() {
     try {
       let newStatus = '';
       currentStatus === "ToDo" ? newStatus = 'In Progress' : newStatus ='Done' 
-      // switch (currentStatus) {
-      //   case 'ToDo':
-      //     newStatus = 'In Progress';
-      //     break;
-      //   case 'In Progress':
-      //     newStatus = 'Done';
-      //     break;
-      //   default:
-      //     break;
-      // }
       await axios.put(`http://localhost:4001/api/tasks/${id}`, {
         Status: newStatus,
       });
@@ -250,7 +241,7 @@ function App() {
                     <div>
                       <p
                         onClick={() => showInfoUser(item)}
-                        className="text-white font-[Poppins] text-xl"
+                        className="text-white font-[Poppins] text-xl line-through"
                         >
                         {item.Title}
                       </p>
