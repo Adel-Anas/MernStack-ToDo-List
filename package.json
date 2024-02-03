@@ -28,7 +28,9 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.3",
-    "tailwind-merge": "^2.2.1"
+    "swagger-ui-express": "^5.0.0",
+    "tailwind-merge": "^2.2.1",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
