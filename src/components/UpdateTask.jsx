@@ -76,7 +76,7 @@ function UpdateTask(TaskInfo) {
                   Info.valueInput({ ...Info.TaskInfo, Priority: e.target.value })
                 }
               >
-                <option value="">Select Priority</option>
+                <option value="Low">Select Priority</option>
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>

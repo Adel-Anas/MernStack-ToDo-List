@@ -9,7 +9,8 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "dev:Back": "nodemon ./BackEnd/Server.js --trace-warnings",
-    "dev": "concurrently \"npm run dev:Front\" \"npm run dev:Back\""
+    "dev": "concurrently \"npm run dev:Front\" \"npm run dev:Back\"",
+    "test": "jest"
   },
   "dependencies": {
     "aos": "^2.3.4",
@@ -30,6 +31,8 @@
     "tailwind-merge": "^2.2.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
     "@testing-library/jest-dom": "^6.4.1",
     "@testing-library/react": "^14.2.0",
     "@types/react": "^18.2.43",
@@ -37,6 +40,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.17",
     "axios": "^1.6.7",
+    "babel-jest": "^29.7.0",
     "eslint": "^8.55.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
