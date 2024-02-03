@@ -3,27 +3,40 @@ import cors from 'cors';
 import env from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
+import swaggerUi from 'swagger-ui-express';
+import yaml from 'yamljs';
 import router from './Routes/Route.js';
+
 const app = express();
-const PORT = 4001;
+
+// Load environment variables from .env file
 env.config();
 
-app.use(express.json())
+// Swagger documentation setup
+const swaggerDocument = yaml.load('./swagger.yaml');
+app.use('/api-tasks', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// Express middleware
+app.use(express.json());
 app.use(cors({
   origin: ["http://localhost:5173"],
   methods: ["GET", "POST", "PUT", "DELETE"],
-}))
+}));
 
+// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
-.then(()=> {
+  .then(() => {
     console.log('Connected to MongoDB');
-})
-.catch((err)=>{
+  })
+  .catch((err) => {
     console.log('Error connecting to MongoDB' + err);
-})
+  });
 
-app.use('/api', router)
+// Routes
+app.use('/api', router);
 
-app.listen(PORT, ()=>{
-  console.log(`Server is Running on Port : ${PORT}`)
-})
+// Start the server
+const PORT = 4001;
+app.listen(PORT, () => {
+  console.log(`Server is running on Port: ${PORT}`);
+});
