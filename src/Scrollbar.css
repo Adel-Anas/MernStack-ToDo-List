@@ -1,0 +1,13 @@
+/* ScrollBar.css
+
+/* Track */
+::-webkit-scrollbar {
+  width: 1px;
+  
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 20;
+}
